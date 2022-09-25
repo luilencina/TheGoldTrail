@@ -1,81 +1,67 @@
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Scanner;
 
  public class Main {
      public static void main(String[] args) throws IOException{
-        String fileName = args[0];
-        String[][] matrizPercorrer = readyFile(fileName);
+        String[][] way = wayConstruct(args[0]);
 
-        for(int i=0; i<=matrizPercorrer.length; i++){
-            for (int j = 0; j < matrizPercorrer[0].length; j++)     {
-                System.out.print(matrizPercorrer[i][j] + "  ");
+        System.out.println(" ");
+        System.out.println("A Matriz de valores de ouro que o garimpeiro tem:");
+        wayPrinter(way);
+
+        System.out.println(" ");
+        System.out.println("----------------------------------");
+        System.out.println("Problema 1: Recursão simples sem memorização (quantidade de ouro)");
+        OneExercise x1 = new OneExercise(way);
+        x1.goldCalc();
+
+        System.out.println(" ");
+        System.out.println("----------------------------------");
+        System.out.println("Problema 2: Recursão simples com memorização (quantidade de ouro e caminho)");
+        TwoExercise x2 = new TwoExercise(way, null);
+        x2.goldCalc();
+    }
+
+     public static String[][] wayConstruct(String fileName) throws IOException {
+        String errorString = "Arquivo não encontrado, por favor tente novamente!";
+        String[][] way = new String[0][0];
+        try(BufferedReader file = new BufferedReader(new FileReader("../testes/" + fileName))){
+            String l =  file.readLine();
+            int length = Integer.parseInt(l);
+            way = new String[length][length];
+            int j = 0;
+            try (Scanner in = new Scanner(file)) {
+                while (in.hasNextLine()) {
+                    String line = in.nextLine();
+                    String[] array = line.trim().split("\\s+");
+                    for (int i = 0; i < way.length; i++) {
+                        way[j][i] = array[i];
+                    }
+                    j++;
+                }
+                return way;
+            }
+         } catch(IOException e){
+            System.out.println(errorString);
+        }
+        System.out.println(errorString);
+        return way;
+       }
+
+
+     public static void wayPrinter(String[][] way) throws IOException{
+        for(int i=0; i < way.length; i++){
+            for (int j = 0; j < way[0].length; j++)     {
+                System.out.print(way[i][j] + "  ");
             }
             System.out.println("  ");
         }
+     }
+     
     }
 
-    public static String[][] lerMensagem(String fileName) throws IOException {
-        String[][] matriz = new String[0][0];
-        try (BufferedReader br = new BufferedReader(new FileReader("../testes/" + fileName))) {
-            String line = br.readLine();
-            line.trim();
-            int matrizLength = Integer.parseInt(line);
-            boolean isFirstLine = false;
-            int index = 0;
-            while (line != null && index < matrizLength) {
-                if (!isFirstLine) {
-                    isFirstLine = true;
-                    matriz = new String[matrizLength][matrizLength];
-                    line = br.readLine();
-                } else {
-                    String[] splited = line.trim().split("\\s+");
-                    for (int i = 0; i < matriz.length; i++) {
-                        matriz[index][i] = splited[i];
-                    }
-                    index++;
-                    line = br.readLine();
-                }
-            }
-            br.close();
-            return matriz;
-        } catch (IOException e) {
-            System.out.println(e);
-        }
-        return matriz;
-    }
-
-     public static String[][] readyFile(String fileName) throws IOException {
-        FileReader file = new FileReader("../testes/" + fileName);
-        BufferedReader fileBuffer = new BufferedReader(file);
-        String[][] way  = new String[0][0];
-        String line = fileBuffer.readLine();
-        line.trim();
-        int matrizLength = Integer.parseInt(line);
-        boolean isFirstLine = false;
-        int index = 0;
-       
-        while (line != null && index < matrizLength) {
-            if (!isFirstLine) {
-                isFirstLine = true;
-                way = new String[matrizLength][matrizLength];
-                line = fileBuffer.readLine();
-            } else {
-                String[] splited = line.trim().split("\\s+");
-                for (int i = 0; i < way.length; i++) {
-                    way[index][i] = splited[i];
-                }
-                index++;
-                line = fileBuffer.readLine();
-            }
-        }
-        System.out.print(way);
-        return way;
-    }
-
-}
 
 
 
