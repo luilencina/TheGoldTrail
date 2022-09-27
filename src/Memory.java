@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class Memory {
@@ -5,15 +6,17 @@ public class Memory {
     private String[][] way;
     private RouteMemory route;
 
-    public Memory(String[][] way, RouteMemory[][] route) {
+    public Memory(String[][] way, RouteMemory[][] route) throws IOException{
         ArrayList<String> newRoute = new ArrayList<>();
         this.way = way;
         this.route = new RouteMemory(0, newRoute);
     }
 
-    public int routeCalc(String[][] way, int x, int y) {
+    public int routeCalc(String[][] way, int x, int y) throws IOException{
         if(way[x][y].equals("x")) return (int) Double.NEGATIVE_INFINITY;
-        if (x == 0 && y == way.length - 1) return Integer.parseInt(way[x][y]);
+        if (x == 0 && y == way.length - 1) {
+            return Integer.parseInt(way[x][y]);
+        } 
         if (x == 0){
             int gold = routeCalc(way, x, y + 1);
             saveWay(way, x, y, "leste");
@@ -82,8 +85,15 @@ public class Memory {
         return this.route;
     }
 
-    public void goldCalc() {
-        System.out.println("O Garimpeiro conseguiu: " + this.route.gold + " de Ouro");
+    public RouteMemory saveGold() throws IOException{
+        int gold = routeCalc(way, way.length - 1, 0);
+        this.route.gold = gold;
+        return this.route;
+
+    }
+    public void goldCalc() throws IOException {
+        RouteMemory gold = saveGold();
+        System.out.println("O Garimpeiro conseguiu: " + gold.gold + " de Ouro");
         // System.out.println(this.route.route);
         // for (int i = 0; i < way.length; i++) {
         //     System.out.print(this.route[i] + " ");
