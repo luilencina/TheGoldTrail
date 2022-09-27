@@ -52,27 +52,27 @@ public class Memory {
         // RouteMemory memory = new RouteMemory(0, newWay);
 
         if(compass.equals("norte")){
-            ArrayList<String> newWay = new ArrayList<>(this.route[x][y].route);
+            ArrayList<String> newWay = new ArrayList<>(this.route[x + 1][y].route);
             newWay.add("N");
             // memory.route.add("N");
             return new RouteMemory(Integer.parseInt(way[x][y]), this.route[x][y].route);
         } 
         if(compass.equals("leste")) {
-            ArrayList<String> newWay = new ArrayList<>(this.route[x][y].route);
+            ArrayList<String> newWay = new ArrayList<>(this.route[x][y + 1].route);
             newWay.add("L");
             // memory.route.add("N");
             return new RouteMemory(Integer.parseInt(way[x][y]), this.route[x][y].route);
             // return new RouteMemory(Integer.parseInt(way[x][y]), memory.route);
         }
         if(compass.equals("nordeste")) {
-            ArrayList<String> newWay = new ArrayList<>(this.route[x][y].route);
+            ArrayList<String> newWay = new ArrayList<>(this.route[x - 1][y + 1].route);
             newWay.add("NE");
             return new RouteMemory(Integer.parseInt(way[x][y]), this.route[x][y].route);
         }
 
         // this.route = ;
         System.out.println(this.route[x][y].route);
-        return memory;
+        return null;
     }
 
     public void goldCalc() {
