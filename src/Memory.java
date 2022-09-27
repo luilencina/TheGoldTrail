@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class Memory {
@@ -19,21 +20,23 @@ public class Memory {
                 newRoute.add(caminho);
             }
             new RouteMemory(betterWay.gold, newRoute);
+            return betterWay.gold;
         }
+        int thisGold = way[x][y].equals("x") ? -999999999 : Integer.parseInt(way[x][y]);
         if(way[x][y].equals("x")) return -999999999;
         if (x == 0 && y == way.length - 1) { 
             this.route[x][y] = new RouteMemory(Integer.parseInt(way[x][y]), new ArrayList<>());
-            return Integer.parseInt(way[x][y]);
+            return thisGold;
         }
         if (x == 0){
             int gold = routeCalc(way, x, y + 1);
             this.route[x][y] = saveWay(way, x, y, "leste");
-            return gold + Integer.parseInt(way[x][y]);
+            return gold + thisGold;
         }
         if (y == way.length - 1){
             int gold = routeCalc(way, x - 1, y);
             this.route[x][y] = saveWay(way, x, y, "norte");
-            return gold + Integer.parseInt(way[x][y]);
+            return gold + thisGold;
         } else{
             int norte = routeCalc(way, x - 1, y);
             int leste = routeCalc(way, x, y + 1);
@@ -43,32 +46,42 @@ public class Memory {
             if(max == norte) this.route[x][y] = saveWay(way, x, y, "norte");
             if(max == nordeste) this.route[x][y] = saveWay(way, x, y, "nordeste");
             if(max == leste) this.route[x][y] = saveWay(way, x, y, "leste");
-            return max + Integer.parseInt(way[x][y]);
+            return max + thisGold;
         }
     }
 
     public RouteMemory saveWay(String[][] way, int x, int y, String compass){
+        int thisGold = way[x][y].equals("x") ? -999999999 : Integer.parseInt(way[x][y]);
+
         if(compass.equals("norte")){
             ArrayList<String> newWay = new ArrayList<>(this.route[x - 1][y].route);
             newWay.add(0, "N");
-            return new RouteMemory(Integer.parseInt(way[x][y]), newWay);
+            return new RouteMemory(thisGold, newWay);
         } 
         if(compass.equals("leste")) {
             ArrayList<String> newWay = new ArrayList<>(this.route[x][y + 1].route);
             newWay.add(0, "E");
-            return new RouteMemory(Integer.parseInt(way[x][y]), newWay);
+            return new RouteMemory(thisGold, newWay);
         }
         if(compass.equals("nordeste")) {
             ArrayList<String> newWay = new ArrayList<>(this.route[x - 1][y + 1].route);
             newWay.add(0, "NE");
-            return new RouteMemory(Integer.parseInt(way[x][y]), newWay);
+            return new RouteMemory(thisGold, newWay);
         }
 
         return null;
     }
 
-    public void goldCalc() {
-        System.out.println("O Garimpeiro conseguiu: " + routeCalc(way, way.length - 1, 0) + " de Ouro");
+    public RouteMemory[][] saveGold() throws IOException{
+        int gold = routeCalc(way, way.length - 1, 0);
+        this.route[way.length - 1][0].gold = gold;
+        return this.route;
+
+    }
+
+    public void goldCalc() throws IOException {
+        RouteMemory[][] gold = saveGold();
+        System.out.println("O Garimpeiro conseguiu: " + gold[way.length - 1][0].gold + " de Ouro");
         System.out.println(route[way.length - 1][0].route);
     }   
 
