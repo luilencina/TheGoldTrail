@@ -20,7 +20,7 @@ import java.util.Scanner;
         System.out.println(" ");
         System.out.println("----------------------------------");
         System.out.println("Problema 2: Recursão simples com memorização (quantidade de ouro e caminho)");
-        Memory x2 = new Memory(way, null);
+        TwoExercise x2 = new TwoExercise(way, null);
         x2.goldCalc();
     }
 
