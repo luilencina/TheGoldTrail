@@ -62,61 +62,42 @@ public class TwoExercise {
         return verify;
     }
 
-    private RouteMemory retornaCaminhoEscolhido(RouteMemory NE,
-    RouteMemory N, RouteMemory E) {
-        if (NE.gold >= N.gold && NE.gold >= E.gold) {
-            ArrayList<String> novoCaminhoPercorrido = new ArrayList<>(NE.route);
-            novoCaminhoPercorrido.add("NE");
-            return new RouteMemory(NE.gold, novoCaminhoPercorrido);
-        }
-        if (N.gold >= NE.gold && N.gold >= E.gold) {
-            ArrayList<String> novoCaminhoPercorrido = new ArrayList<>(N.route);
-            novoCaminhoPercorrido.add("N");
-            return new RouteMemory(N.gold, novoCaminhoPercorrido);
-        } else {
-            ArrayList<String> novoCaminhoPercorrido = new ArrayList<>(E.route);
-            novoCaminhoPercorrido.add("E");
-            return new RouteMemory(E.gold, novoCaminhoPercorrido);
-
-        }
-}
-
-    // public RouteMemory routeCalcFinal(int compass, RouteMemory memory) {
+    public RouteMemory routeCalcFinal(int compass, RouteMemory memory) {
         
-            // int norte = routeCalc(way, x - 1, y);
-            // int leste = routeCalc(way, x, y + 1);
-            // int nordeste = routeCalc(way, x - 1, y + 1);
-            // int max = Math.max(Math.max(norte, leste),nordeste);
+            int norte = routeCalc(way, x - 1, y);
+            int leste = routeCalc(way, x, y + 1);
+            int nordeste = routeCalc(way, x - 1, y + 1);
+            int max = Math.max(Math.max(norte, leste),nordeste);
 
-            // if(compass == max) {
-                // if(memory.route.isEmpty()) {
-                //     memory.route.add("N");
-                //     memory.update(norte+Integer.parseInt(way[x][y]), memory.route);
-                //     return memory;
-                // }
-            //     memory.route.add("N");
-            //     return new RouteMemory(norte+Integer.parseInt(way[x][y]), memory.route);
-            // }
-            // if(leste==max) {
-                // if(memory.route.isEmpty()) {
-                //     memory.route.add("L");
-                //     memory.update(norte+Integer.parseInt(way[x][y]), memory.route);
-                //     return memory;
-                // }
-            //     memory.route.add("L");
-            //     return new RouteMemory(norte+Integer.parseInt(way[x][y]), memory.route);
-            // }
-            // if(nordeste==max) {
-                // if(memory.route.isEmpty()) {
-                //     memory.route.add("NE");
-                //     memory.update(norte+Integer.parseInt(way[x][y]), memory.route);
-                //     return memory;
-                // }
-    //             memory.route.add("NE");
-    //             return new RouteMemory(norte+Integer.parseInt(way[x][y]), memory.route);
-    //         }
-    //     return memory;
-    // }
+            if(compass == max) {
+                if(memory.route.isEmpty()) {
+                    memory.route.add("N");
+                    memory.update(norte+Integer.parseInt(way[x][y]), memory.route);
+                    return memory;
+                }
+                memory.route.add("N");
+                return new RouteMemory(norte+Integer.parseInt(way[x][y]), memory.route);
+            }
+            if(leste==max) {
+                if(memory.route.isEmpty()) {
+                    memory.route.add("L");
+                    memory.update(norte+Integer.parseInt(way[x][y]), memory.route);
+                    return memory;
+                }
+                memory.route.add("L");
+                return new RouteMemory(norte+Integer.parseInt(way[x][y]), memory.route);
+            }
+            if(nordeste==max) {
+                if(memory.route.isEmpty()) {
+                    memory.route.add("NE");
+                    memory.update(norte+Integer.parseInt(way[x][y]), memory.route);
+                    return memory;
+                }
+                memory.route.add("NE");
+                return new RouteMemory(norte+Integer.parseInt(way[x][y]), memory.route);
+            }
+        return memory;
+    }
 
     public void goldCalc() {
         ArrayList<String> parkour = new ArrayList<>();
