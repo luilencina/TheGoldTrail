@@ -21,15 +21,18 @@ public class Memory {
             new RouteMemory(betterWay.gold, newRoute);
         }
         if(way[x][y].equals("x")) return (int) Double.NEGATIVE_INFINITY;
-        if (x == 0 && y == way.length - 1) return Integer.parseInt(way[x][y]);
+        if (x == 0 && y == way.length - 1) { 
+            this.route[x][y] = new RouteMemory(Integer.parseInt(way[x][y]), new ArrayList<>());
+            return Integer.parseInt(way[x][y]);
+        }
         if (x == 0){
             int gold = routeCalc(way, x, y + 1);
-            saveWay(way, x, y, "leste");
+            this.route[x][y] = saveWay(way, x, y, "leste");
             return gold + Integer.parseInt(way[x][y]);
         }
         if (y == way.length - 1){
             int gold = routeCalc(way, x - 1, y);
-            saveWay(way, x, y, "norte");
+            this.route[x][y] = saveWay(way, x, y, "norte");
             return gold + Integer.parseInt(way[x][y]);
         } else{
             int norte = routeCalc(way, x - 1, y);
@@ -37,47 +40,38 @@ public class Memory {
             int nordeste = routeCalc(way, x - 1, y + 1);
             int max = Math.max(Math.max(norte, leste),nordeste); 
 
-            if(max == norte) saveWay(way, x, y, "norte");
-            if(max == nordeste) saveWay(way, x, y, "nordeste");
-            if(max == leste) saveWay(way, x, y, "leste");
+            if(max == norte) this.route[x][y] = saveWay(way, x, y, "norte");
+            if(max == nordeste) this.route[x][y] = saveWay(way, x, y, "nordeste");
+            if(max == leste) this.route[x][y] = saveWay(way, x, y, "leste");
             return max + Integer.parseInt(way[x][y]);
         }
     }
 
     public RouteMemory saveWay(String[][] way, int x, int y, String compass){
-        ArrayList<String> newWay = new ArrayList<>();
-        RouteMemory memory = new RouteMemory(0, newWay);
+        // ArrayList<String> newWay = new ArrayList<>();
+        // RouteMemory memory = new RouteMemory(0, newWay);
 
         if(compass.equals("norte")){
-            if(memory.route.isEmpty()) {
-                memory.route.add("N");
-                memory.update(Integer.parseInt(way[x][y]), memory.route);
-                return memory;
-            }
-            memory.route.add("N");
-            return new RouteMemory(Integer.parseInt(way[x][y]), memory.route);
+            ArrayList<String> newWay = new ArrayList<>(this.route[x][y].route);
+            newWay.add("N");
+            // memory.route.add("N");
+            return new RouteMemory(Integer.parseInt(way[x][y]), this.route[x][y].route);
         } 
         if(compass.equals("leste")) {
-            if(memory.route.isEmpty()) {
-                memory.route.add("E");
-                memory.update(Integer.parseInt(way[x][y]), memory.route);
-                return memory;
-            }
-            memory.route.add("E");
-            return new RouteMemory(Integer.parseInt(way[x][y]), memory.route);
+            ArrayList<String> newWay = new ArrayList<>(this.route[x][y].route);
+            newWay.add("L");
+            // memory.route.add("N");
+            return new RouteMemory(Integer.parseInt(way[x][y]), this.route[x][y].route);
+            // return new RouteMemory(Integer.parseInt(way[x][y]), memory.route);
         }
         if(compass.equals("nordeste")) {
-            if(memory.route.isEmpty()) {
-                memory.route.add("NE");
-                memory.update(Integer.parseInt(way[x][y]), memory.route);
-                return memory;
-            }
-            memory.route.add("NE");
-            return new RouteMemory(Integer.parseInt(way[x][y]), memory.route);
+            ArrayList<String> newWay = new ArrayList<>(this.route[x][y].route);
+            newWay.add("NE");
+            return new RouteMemory(Integer.parseInt(way[x][y]), this.route[x][y].route);
         }
 
         // this.route = ;
-        System.out.println(memory.route);
+        System.out.println(this.route[x][y].route);
         return memory;
     }
 
