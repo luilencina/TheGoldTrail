@@ -11,11 +11,11 @@ import java.util.Scanner;
         System.out.println("A Matriz de valores de ouro que o garimpeiro tem:");
         wayPrinter(way);
 
-        System.out.println(" ");
-        System.out.println("----------------------------------");
-        System.out.println("Problema 1: Recursão simples sem memorização (quantidade de ouro)");
-        OneExercise x1 = new OneExercise(way);
-        x1.goldCalc();
+        // System.out.println(" ");
+        // System.out.println("----------------------------------");
+        // System.out.println("Problema 1: Recursão simples sem memorização (quantidade de ouro)");
+        // OneExercise x1 = new OneExercise(way);
+        // x1.goldCalc();
 
         System.out.println(" ");
         System.out.println("----------------------------------");

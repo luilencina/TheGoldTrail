@@ -20,7 +20,7 @@ public class Memory {
             }
             new RouteMemory(betterWay.gold, newRoute);
         }
-        if(way[x][y].equals("x")) return (int) Double.NEGATIVE_INFINITY;
+        if(way[x][y].equals("x")) return -999999999;
         if (x == 0 && y == way.length - 1) { 
             this.route[x][y] = new RouteMemory(Integer.parseInt(way[x][y]), new ArrayList<>());
             return Integer.parseInt(way[x][y]);
@@ -48,39 +48,28 @@ public class Memory {
     }
 
     public RouteMemory saveWay(String[][] way, int x, int y, String compass){
-        // ArrayList<String> newWay = new ArrayList<>();
-        // RouteMemory memory = new RouteMemory(0, newWay);
-
         if(compass.equals("norte")){
             ArrayList<String> newWay = new ArrayList<>(this.route[x - 1][y].route);
-            newWay.add("N");
-            // memory.route.add("N");
+            newWay.add(0, "N");
             return new RouteMemory(Integer.parseInt(way[x][y]), newWay);
         } 
         if(compass.equals("leste")) {
             ArrayList<String> newWay = new ArrayList<>(this.route[x][y + 1].route);
-            newWay.add("L");
-            // memory.route.add("N");
+            newWay.add(0, "E");
             return new RouteMemory(Integer.parseInt(way[x][y]), newWay);
-            // return new RouteMemory(Integer.parseInt(way[x][y]), memory.route);
         }
         if(compass.equals("nordeste")) {
             ArrayList<String> newWay = new ArrayList<>(this.route[x - 1][y + 1].route);
-            newWay.add("NE");
+            newWay.add(0, "NE");
             return new RouteMemory(Integer.parseInt(way[x][y]), newWay);
         }
 
-        // this.route = ;
-        // System.out.println(this.route[x][y].route);
         return null;
     }
 
     public void goldCalc() {
         System.out.println("O Garimpeiro conseguiu: " + routeCalc(way, way.length - 1, 0) + " de Ouro");
-        // for (int i = 0; i < way.length; i++) {
-        //     System.out.print(this.route[i] + " ");
-        // }
-        // System.out.println(this.route);
+        System.out.println(route[way.length - 1][0].route);
     }   
 
 }
