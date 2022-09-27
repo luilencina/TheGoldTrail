@@ -24,19 +24,19 @@ public class Memory {
         if (x == 0 && y == way.length - 1) return Integer.parseInt(way[x][y]);
         if (x == 0){
             int gold = routeCalc(way, x, y + 1);
-            // this.route[x][y].gold = gold +  Integer.parseInt(way[x][y]);
             saveWay(way, x, y, "leste");
             return gold + Integer.parseInt(way[x][y]);
         }
         if (y == way.length - 1){
             int gold = routeCalc(way, x - 1, y);
-            // this.route[x][y].gold = gold + Integer.parseInt(way[x][y]);
             saveWay(way, x, y, "norte");
             return gold + Integer.parseInt(way[x][y]);
         } else{
-            saveWay(way, x, y, "norte");
-            return Math.max(Math.max(routeCalc(way, x - 1, y + 1), routeCalc(way, x - 1, y)),routeCalc(way, x, y + 1)) 
-            + Integer.parseInt(way[x][y]);
+            int max = Math.max(Math.max(routeCalc(way, x - 1, y + 1), routeCalc(way, x - 1, y)),routeCalc(way, x, y + 1)); 
+            if(max == routeCalc(way, x - 1, y)) saveWay(way, x, y, "norte");
+            if(max == routeCalc(way, x - 1, y + 1)) saveWay(way, x, y, "nordeste");
+            if(max == routeCalc(way, x, y + 1)) saveWay(way, x, y, "leste");
+            return max;
         }
     }
 
@@ -73,18 +73,15 @@ public class Memory {
         }
 
         System.out.println(memory.route);
-        this.route[x][y].route = memory.route;
         return memory;
     }
 
     public void goldCalc() {
-        ArrayList<String> caminhoPercorrido = new ArrayList<>();
-        // caminhoPercorrido = saveWay(way, x, y, "norte");
-        // int calculaValor = routeCalc(route, way.length - 1, 0);
         System.out.println("O Garimpeiro conseguiu: " + routeCalc(way, way.length - 1, 0) + " de Ouro");
-        for (int i = 0; i < way.length; i++) {
-            System.out.print(this.route[i].toString() + " ");
-        }
+        // for (int i = 0; i < way.length; i++) {
+        //     System.out.print(this.route[i] + " ");
+        // }
+        // System.out.println(this.route);
     }   
 
 }
