@@ -13,29 +13,23 @@ public class Memory {
 
     public int routeCalc(String[][] way, int x, int y) {
         RouteMemory verify = this.route[x][y] == null ? null : this.route[x][y];
-        if (verify != null) {
-            ArrayList<String> newRoute = new ArrayList<>();
-            RouteMemory betterWay = verify;
-            for (String caminho : betterWay.route) {
-                newRoute.add(caminho);
-            }
-            new RouteMemory(betterWay.gold, newRoute);
-            return betterWay.gold;
-        }
+        if (verify != null) return verify.gold;
         int thisGold = way[x][y].equals("x") ? -999999999 : Integer.parseInt(way[x][y]);
-        if(way[x][y].equals("x")) return -999999999;
         if (x == 0 && y == way.length - 1) { 
             this.route[x][y] = new RouteMemory(Integer.parseInt(way[x][y]), new ArrayList<>());
+            this.route[x][y].gold = thisGold;
             return thisGold;
         }
         if (x == 0){
             int gold = routeCalc(way, x, y + 1);
             this.route[x][y] = saveWay(way, x, y, "leste");
+            this.route[x][y].gold = gold + thisGold;
             return gold + thisGold;
         }
         if (y == way.length - 1){
             int gold = routeCalc(way, x - 1, y);
             this.route[x][y] = saveWay(way, x, y, "norte");
+            this.route[x][y].gold = gold + thisGold;
             return gold + thisGold;
         } else{
             int norte = routeCalc(way, x - 1, y);
@@ -46,6 +40,7 @@ public class Memory {
             if(max == norte) this.route[x][y] = saveWay(way, x, y, "norte");
             if(max == nordeste) this.route[x][y] = saveWay(way, x, y, "nordeste");
             if(max == leste) this.route[x][y] = saveWay(way, x, y, "leste");
+            this.route[x][y].gold = max + thisGold;
             return max + thisGold;
         }
     }
@@ -72,16 +67,10 @@ public class Memory {
         return null;
     }
 
-    public RouteMemory[][] saveGold() throws IOException{
+
+    public void goldCalc() {
         int gold = routeCalc(way, way.length - 1, 0);
-        this.route[way.length - 1][0].gold = gold;
-        return this.route;
-
-    }
-
-    public void goldCalc() throws IOException {
-        RouteMemory[][] gold = saveGold();
-        System.out.println("O Garimpeiro conseguiu: " + gold[way.length - 1][0].gold + " de Ouro");
+        System.out.println("O Garimpeiro conseguiu: " + gold + " de Ouro");
         System.out.println(route[way.length - 1][0].route);
     }   
 
