@@ -42,7 +42,7 @@ public class Memory {
     }
 
     public RouteMemory saveWay(String[][] way, int x, int y, String compass){
-        int thisGold = way[x][y].equals("x") ? null : Integer.parseInt(way[x][y]);
+        int thisGold = way[x][y].equals("x") ? -9999999 : Integer.parseInt(way[x][y]);
 
         if(compass.equals("norte")){
             ArrayList<String> newWay = new ArrayList<>(this.route[x - 1][y].route);
