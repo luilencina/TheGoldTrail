@@ -32,11 +32,15 @@ public class Memory {
             saveWay(way, x, y, "norte");
             return gold + Integer.parseInt(way[x][y]);
         } else{
-            int max = Math.max(Math.max(routeCalc(way, x - 1, y + 1), routeCalc(way, x - 1, y)),routeCalc(way, x, y + 1)); 
-            if(max == routeCalc(way, x - 1, y)) saveWay(way, x, y, "norte");
-            if(max == routeCalc(way, x - 1, y + 1)) saveWay(way, x, y, "nordeste");
-            if(max == routeCalc(way, x, y + 1)) saveWay(way, x, y, "leste");
-            return max;
+            int norte = routeCalc(way, x - 1, y);
+            int leste = routeCalc(way, x, y + 1);
+            int nordeste = routeCalc(way, x - 1, y + 1);
+            int max = Math.max(Math.max(norte, leste),nordeste); 
+
+            if(max == norte) saveWay(way, x, y, "norte");
+            if(max == nordeste) saveWay(way, x, y, "nordeste");
+            if(max == leste) saveWay(way, x, y, "leste");
+            return max + Integer.parseInt(way[x][y]);
         }
     }
 
