@@ -66,7 +66,7 @@ public class TwoExercise {
         int gold = 0;
         if(way[way.length - 1][0].equals("x") || way[way.length - 1][0].equals(-9999999)){
             gold = routeCalc(way, way.length - 1, 1);
-            this.route[way.length - 1][0] = saveWay(way, 0, 0, "leste");
+            this.route[way.length - 1][0] = saveWay(way, way.length - 1, 0, "leste");
 
         } else {
             gold = routeCalc(way, way.length - 1, 0);

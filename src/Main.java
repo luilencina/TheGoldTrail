@@ -11,17 +11,23 @@ import java.util.Scanner;
         System.out.println("A Matriz de valores de ouro que o garimpeiro tem:");
         wayPrinter(way);
 
-        // System.out.println(" ");
-        // System.out.println("----------------------------------");
-        // System.out.println("Problema 1: Recursão simples sem memorização (quantidade de ouro)");
-        // OneExercise x1 = new OneExercise(way);
-        // x1.goldCalc();
+        System.out.println(" ");
+        System.out.println("----------------------------------");
+        System.out.println("Problema 1: Recursão simples sem memorização (quantidade de ouro)");
+        OneExercise x1 = new OneExercise(way);
+        x1.goldCalc();
 
         System.out.println(" ");
         System.out.println("----------------------------------");
-        System.out.println("Problema 2: Recursão simples com memorização (quantidade de ouro e caminho)");
+        System.out.println("Problema 2: Recursão com memorização (quantidade de ouro e caminho)");
         TwoExercise x2 = new TwoExercise(way, null);
         x2.goldCalc();
+
+        // System.out.println(" ");
+        // System.out.println("----------------------------------");
+        // System.out.println("Problema 3: Sem recursão ou memorização (quantidade de ouro e caminho)");
+        // TwoExercise x3 = new Three(way, null);
+        // x3.goldCalc();
     }
 
      public static String[][] wayConstruct(String fileName) throws IOException {

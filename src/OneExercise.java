@@ -7,7 +7,7 @@ public class OneExercise {
     }
 
     public int routeCalc(String[][] way, int x, int y) {
-        if(way[x][y].equals("x")) return (int) Double.NEGATIVE_INFINITY;
+        if(way[x][y].equals("x")) return -9999999;
         if (x == 0 && y == way.length - 1) return Integer.parseInt(way[x][y]);
         if (x == 0) return routeCalc(way, x, y + 1) + Integer.parseInt(way[x][y]);
         if (y == way.length - 1){
@@ -19,6 +19,12 @@ public class OneExercise {
     }
 
     public void goldCalc() {
-        System.out.println("O Garimpeiro conseguiu: " + routeCalc(way, way.length - 1, 0) + " de Ouro");
+        int gold = 0;
+        if(way[way.length - 1][0].equals("x") || way[way.length - 1][0].equals(-9999999)){
+            gold = routeCalc(way, way.length - 1, 1);
+        } else {
+            gold = routeCalc(way, way.length - 1, 0);
+        }
+        System.out.println("O Garimpeiro conseguiu: " + gold + " de Ouro");
     }   
 }   
